@@ -8,15 +8,25 @@ using Newtonsoft.Json;
 
 namespace QuerySpecification
 {
+    /// <summary>
+    /// 查询规约（可包含查询、分页、排序、扩展等操作）
+    /// </summary>
+    /// <typeparam name="TEntity">实体类型</typeparam>
     [DataContract]
     [Serializable]
     public class Specification<TEntity> where TEntity : class
     {
         private List<Expression<Func<TEntity, object>>> includedNavigationPropertiesExpression;
 
+        /// <summary>
+        /// 查询条件
+        /// </summary>
         [DataMember]
         public Criteria<TEntity> Criteria { get; set; }
 
+        /// <summary>
+        /// 导航属性
+        /// </summary>
         [DataMember]
         public List<string> IncludedNavigationProperties { get; set; }
 
@@ -34,6 +44,7 @@ namespace QuerySpecification
                     {
                         IncludedNavigationProperties = new List<string>();
                     }
+
                     foreach (var expression in value)
                     {
                         var selectorString = expression.Body.ToString();
@@ -44,16 +55,26 @@ namespace QuerySpecification
                 {
                     IncludedNavigationProperties = new List<string>();
                 }
+
                 includedNavigationPropertiesExpression = value;
             }
         }
 
+        /// <summary>
+        /// 分页参数
+        /// </summary>
         [DataMember]
         public PagerArgs PagerArgs { get; set; }
 
+        /// <summary>
+        /// 排序条件
+        /// </summary>
         [DataMember]
         public SortCondition<TEntity> SortCondition { get; set; }
 
+        /// <summary>
+        /// 转换查询规约的实体类型
+        /// </summary>
         public Specification<TDestination> Cast<TDestination>() where TDestination : class
         {
             var result = new Specification<TDestination>();

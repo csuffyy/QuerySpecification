@@ -17,7 +17,7 @@ namespace QuerySpecification
         public int ItemsPerPage { get; set; }
 
         /// <summary>
-        /// 第几页
+        /// 第几页(从1开始)
         /// </summary>
         [DataMember]
         public int PageNumber { get; set; }

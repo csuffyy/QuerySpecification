@@ -45,7 +45,10 @@ namespace QueryConditionTest
             specification.Save(fileName);
             var spec = Specification<User>.LoadFromFile(fileName);
 
-            List<User> users = userService.GetUser(spec);
+            var users = userService.GetUser(spec);
+
+            Console.WriteLine("Result:");
+
             foreach (var user in users)
             {
                 Console.WriteLine(user);
@@ -65,12 +68,15 @@ namespace QueryConditionTest
                 Comments = new[] { "Comments" + x }
             });
 
-        public List<User> GetUser(Specification<User> queryCondition)
+        public List<User> GetUser(Specification<User> spec)
         {
-            Func<IEnumerable<User>, IOrderedEnumerable<User>> enumerableSortingFunc = queryCondition.SortCondition.GetIEnumerableSortingExpression().Compile();
-            var predicate = queryCondition.Criteria.GetExpression();
-            var list = enumerableSortingFunc(context.AsQueryable().Where(predicate.Compile())).ToList();
-            return list;
+            //方法1：
+            var users = context.AsQueryable().Query(spec).ToList();
+            return users;
+
+            //方法2：
+            //var users = context.Query(spec).ToList();
+            //return users;
         }
     }
 
