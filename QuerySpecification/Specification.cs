@@ -84,13 +84,41 @@ namespace QuerySpecification
         }
 
         /// <summary>
+        /// 转为Json字符串
+        /// </summary>
+        /// <returns>Json字符串</returns>
+        public string ToJson()
+        {
+            var json = JsonConvert.SerializeObject(this, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter());
+            return json;
+        }
+
+        /// <summary>
         /// 保存当前查询条件
         /// </summary>
         /// <param name="fileName">文件名称</param>
         public void Save(string fileName)
         {
-            var s = JsonConvert.SerializeObject(this, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter());
-            File.WriteAllText(fileName, s);
+            var json = ToJson();
+            File.WriteAllText(fileName, json);
+        }
+
+        /// <summary>
+        /// 从Json字符串中加载查询条件
+        /// </summary>
+        /// <param name="jsonString">Json字符串</param>
+        /// <returns>查询条件</returns>
+        public static Specification<TEntity> LoadFromString(string jsonString)
+        {
+            try
+            {
+                var spec = JsonConvert.DeserializeObject<Specification<TEntity>>(jsonString);
+                return spec;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
