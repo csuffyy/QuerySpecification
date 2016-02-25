@@ -28,12 +28,12 @@ namespace QuerySpecification
             var temp = source.Where(predicate);
 
             //分页
-            if (specification.PagerArgs != null)
+            if (specification.Pagination != null)
             {
-                var skip = specification.PagerArgs.PageNumber > 1
-                    ? specification.PagerArgs.ItemsPerPage * (specification.PagerArgs.PageNumber - 1)
+                var skip = specification.Pagination.PageIndex > 1
+                    ? specification.Pagination.PageSize * (specification.Pagination.PageIndex - 1)
                     : 0;
-                var take = specification.PagerArgs.ItemsPerPage;
+                var take = specification.Pagination.PageSize * specification.Pagination.PageCount;
 
                 temp = temp.Skip(skip).Take(take);
             }
@@ -71,12 +71,12 @@ namespace QuerySpecification
             var temp = source.Where(predicate);
 
             //分页
-            if (specification.PagerArgs != null)
+            if (specification.Pagination != null)
             {
-                var skip = specification.PagerArgs.PageNumber > 1
-                    ? specification.PagerArgs.ItemsPerPage * (specification.PagerArgs.PageNumber - 1)
+                var skip = specification.Pagination.PageIndex > 1
+                    ? specification.Pagination.PageSize * (specification.Pagination.PageIndex - 1)
                     : 0;
-                var take = specification.PagerArgs.ItemsPerPage;
+                var take = specification.Pagination.PageSize * specification.Pagination.PageCount;
 
                 temp = temp.Skip(skip).Take(take);
             }

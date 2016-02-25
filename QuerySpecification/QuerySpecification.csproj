@@ -54,7 +54,7 @@
     <Compile Include="Enum\TrueFalse.cs" />
     <Compile Include="Extension\QueryExtensions.cs" />
     <Compile Include="Extension\ExtensionMethods.cs" />
-    <Compile Include="PagerArgs.cs" />
+    <Compile Include="Pagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortCondition.cs" />
     <Compile Include="SortItem.cs" />

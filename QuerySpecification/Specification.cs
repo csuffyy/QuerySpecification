@@ -64,7 +64,7 @@ namespace QuerySpecification
         /// 分页参数
         /// </summary>
         [DataMember]
-        public PagerArgs PagerArgs { get; set; }
+        public Pagination Pagination { get; set; }
 
         /// <summary>
         /// 排序条件
@@ -87,14 +87,9 @@ namespace QuerySpecification
                     result.IncludedNavigationProperties.Add(stringBuilder.ToString());
                 }
             }
-            if (PagerArgs != null)
+            if (Pagination != null)
             {
-                var paginationDatum = new PagerArgs()
-                {
-                    ItemsPerPage = PagerArgs.ItemsPerPage,
-                    PageNumber = PagerArgs.PageNumber
-                };
-                result.PagerArgs = paginationDatum;
+                result.Pagination = new Pagination(Pagination.PageSize, Pagination.PageIndex);
             }
             result.Criteria = Criteria.Cast<TDestination>();
             if (SortCondition != null)

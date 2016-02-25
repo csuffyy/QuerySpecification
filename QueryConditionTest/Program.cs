@@ -13,30 +13,27 @@ namespace QueryConditionTest
 
             var specification = new Specification<User>
             {
-                // navigation properties you wanna add  to entity
+                // 导航属性
                 IncludedNavigationProperties = new List<string> { "FisrtName", "LastName" },
 
-                // data of pagination result, you can leat it to null if you don&#39;t have pagination	
-                PagerArgs = new PagerArgs
-                {
-                    PageNumber = 1, // destination page number
-                    ItemsPerPage = 2 // items per each pages
-                }
+                // 分页参数
+                Pagination = new Pagination(2, 1)
             };
 
-            // Filtering 
+            // 查询条件
             var firstCriteria = Criteria<User>.True();
             firstCriteria = firstCriteria.And(user => user.FirstName, Operator.Like, "1");
 
-            var secondCriteria = Criteria<User>.False();
+            var secondCriteria = Criteria<User>.True();
             secondCriteria = secondCriteria.Or(user => user.LastName, Operator.Like, "2");
-            secondCriteria = secondCriteria.Or(user => user.LastName, Operator.EndsWith, "3");
+            //secondCriteria = secondCriteria.Or(user => user.LastName, Operator.EndsWith, "3");
 
             var finalCriteria = firstCriteria.And(secondCriteria);
 
+            // 查询条件
             specification.Criteria = finalCriteria;
 
-            // Sorting
+            // 排序条件
             var sortCondition = SortCondition<User>.OrderBy(q => q.FirstName).ThenByDescending(q => q.LastName);
             specification.SortCondition = sortCondition;
 

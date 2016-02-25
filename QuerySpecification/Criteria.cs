@@ -708,7 +708,7 @@ namespace QuerySpecification
 
         public static string StringConvert(double? number)
         {
-            throw new NotSupportedException($"StringConvert:{number}");
+            throw new NotSupportedException(string.Format("StringConvert:{0}", number));
         }
 
         private static Expression GetLeftSide(string selectorString, Type parameterExpressionType,
