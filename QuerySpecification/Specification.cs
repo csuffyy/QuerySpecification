@@ -160,5 +160,13 @@ namespace QuerySpecification
                 throw;
             }
         }
+
+        /// <summary>
+        /// ×ª»¯Îª×Ö·û´®
+        /// </summary>
+        public override string ToString()
+        {
+            return ToJson();
+        }
     }
 }
